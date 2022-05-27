@@ -10,5 +10,5 @@ setup(
     description="A simple PyMongo wrapper.",
     install_requires=requirements,
     python_requires=">=3.10",
-    packages=["mongo_manager"]
+    py_modules=["mongo_manager"]
 )
