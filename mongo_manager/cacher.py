@@ -1,5 +1,6 @@
-from lru import LRU
 from typing import Any
+
+from lru import LRU
 
 from .manager import MongoManager
 

@@ -34,7 +34,9 @@ def create_nested_dict(path: str | list[str], value: T, /) -> NestedDict | T:
     return reference
 
 
-def find_in_nested_dict(find_in: NestedDict, path: str | list[str], /, *, default: T = None) -> Any | T:
+def find_in_nested_dict(
+    find_in: NestedDict, path: str | list[str], /, *, default: T = None
+) -> Any | T:
     """Finds the value that is in the path.
 
     Args:

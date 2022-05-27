@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
 import time
+from typing import TYPE_CHECKING, Any
 
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -41,13 +41,15 @@ class MongoManager:
 
         if len(path) < 2:
             raise ValueError("Path must be at least 2 elements long: Collection and _id.")
-        
+
         collection = self._db[path.pop(0)]
         _id = maybe_int(path.pop(0))
 
         return collection, _id, path[0]
 
-    async def ping(self, *, return_is_alive: bool = False) -> int | float | tuple[int | float, bool]:
+    async def ping(
+        self, *, return_is_alive: bool = False
+    ) -> int | float | tuple[int | float, bool]:
         ts = time.time()
         response = await self._db.command("ping")
         ts = time.time() - ts
@@ -175,7 +177,7 @@ class MongoManager:
             return
 
         _id = maybe_int(path.pop(0))
-        
+
         if not path:
             await collection.delete_one({"_id": _id})
         else:
