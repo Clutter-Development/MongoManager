@@ -22,4 +22,4 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          PYTHONPATH="$(pwd)" pytest -vs --cov=discord --cov-report term-missing:skip-covered
+          pytest -vs ./tests
