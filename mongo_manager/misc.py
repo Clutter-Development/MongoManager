@@ -48,7 +48,7 @@ def find_in_nested_dict(
         Any: The value. Returns the default value if the key is not found.
     """
     if isinstance(path, str):
-        return find_in_nested_dict(find_in, path.split("."))
+        return find_in_nested_dict(find_in, path.split("."), default=default)
 
     for key in path:
         try:
