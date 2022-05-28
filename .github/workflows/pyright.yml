@@ -16,6 +16,6 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -U pip pyright pytest pytest-asyncio
-          pip install -r reqirements.txt
+          pip install -r requirements.txt
       - name: Run PyRight
         run: pyright ./
