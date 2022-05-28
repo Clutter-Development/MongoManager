@@ -12,7 +12,7 @@ T = TypeVar("T")
     (
         ({"abc": {"def": {"ghi": 123}}}, "abc.def.ghi", "unused default", 123),
         ({"abc": {"def": {"ghi": 123}}}, ["abc", "def", "ghi"], "unused default", 123),
-        ({"abc": {"def": {"ghi": 123}}}, "abc.def.ghii", "used default", "used default")
+        ({"abc": {"def": {"ghi": 123}}}, "abc.def.ghii", "used default", "used default"),
     ),
 )
 def test_find_in_nested_dict(
@@ -36,10 +36,7 @@ def test_create_nested_dict(*, path: str | list[str], value: T, expected_result:
 
 @pytest.mark.parametrize(
     ("value", "expected_result"),
-    (
-        ("123456789", 123456789),
-        ("string", "string")
-    ),
+    (("123456789", 123456789), ("string", "string")),
 )
 def test_maybe_int(*, value: T, expected_result: int | T) -> None:
     assert maybe_int(value) == expected_result

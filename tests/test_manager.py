@@ -1,7 +1,9 @@
-from typing import Any
-import os
 import asyncio
+import os
+from typing import Any
+
 import pytest
+
 from mongo_manager import MongoManager
 
 db = MongoManager(os.getenv("MONGO_URI"), database="MongoManagerTest")  # type: ignore
@@ -29,11 +31,31 @@ async def test_setup():
 @pytest.mark.parametrize(
     ("path", "value", "query", "expected_result"),
     (
-        ("test._id name", {"some_key": 123}, {"_id": "_id name"}, {"_id": "_id name", "some_key": 123}),
-        ("test.123123123123123123123", {"asd": "def"}, {"_id": 123123123123123123123}, {"_id": 123123123123123123123, "asd": "def"}),
-        ("test.another _id.a var", "some value", {"_id": "another _id"}, {"_id": "another _id", "a var": "some value"}),
-        ("test.67676767676767.object_h.k1.2", 6.9, {"_id": 67676767676767}, {"_id": 67676767676767, "object_h": {"k1": {"2": 6.9}}})
-    )
+        (
+            "test._id name",
+            {"some_key": 123},
+            {"_id": "_id name"},
+            {"_id": "_id name", "some_key": 123},
+        ),
+        (
+            "test.123123123123123123123",
+            {"asd": "def"},
+            {"_id": 123123123123123123123},
+            {"_id": 123123123123123123123, "asd": "def"},
+        ),
+        (
+            "test.another _id.a var",
+            "some value",
+            {"_id": "another _id"},
+            {"_id": "another _id", "a var": "some value"},
+        ),
+        (
+            "test.67676767676767.object_h.k1.2",
+            6.9,
+            {"_id": 67676767676767},
+            {"_id": 67676767676767, "object_h": {"k1": {"2": 6.9}}},
+        ),
+    ),
 )
 async def test_manager_set(*, path: str, value: Any, query: dict, expected_result: Any):
     await db.set(path, value)
