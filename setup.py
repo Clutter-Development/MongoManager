@@ -6,7 +6,7 @@ with open("requirements.txt") as f:
 setup(
     name="mongo_manager",
     author="Clutter Development",
-    version="1.0.0",
+    version="1.0.1",
     license="MIT",
     description="A simple PyMongo wrapper.",
     install_requires=requirements,
