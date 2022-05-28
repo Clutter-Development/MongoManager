@@ -21,5 +21,4 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          ls
           pytest -vs ./tests
