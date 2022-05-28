@@ -8,7 +8,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from .misc import create_nested_dict, find_in_nested_dict, maybe_int
 
 if TYPE_CHECKING:
-    from motor.motor_asyncio import AsyncIOMotorCollection
+    from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorDatabase
 
 __all__ = ("MongoManager",)
 
@@ -23,7 +23,7 @@ class MongoManager:
             database (str): The database to use.
         """
         self._client = AsyncIOMotorClient(connect_url, port)
-        self._db = self._client[database]
+        self._db: AsyncIOMotorDatabase = self._client[database]
 
     def _parse_path(self, path: str, /) -> tuple[AsyncIOMotorCollection, str | int, str]:  # type: ignore
         """Parses a path string and returns the excess, a mongo collection and a str or int.
@@ -35,7 +35,7 @@ class MongoManager:
             ValueError: If the path is too short. Minimum 2.
 
         Returns:
-            tuple[pymongo.collection.Collection, str | int, str]: The excess path as a list, the MongoDB collection, the _id of the document which can be a str or an int.
+            tuple[AsyncIOMotorCollection, str | int, str]: The excess path as a list, the MongoDB collection, the _id of the document which can be a str or an int.
         """
         path: list[str] = path.split(".", 2)
 
@@ -45,7 +45,7 @@ class MongoManager:
         collection = self._db[path.pop(0)]
         _id = maybe_int(path.pop(0))
 
-        return collection, _id, path[0]
+        return collection, _id, next(iter(path), "")
 
     async def ping(
         self, *, return_is_alive: bool = False
@@ -93,7 +93,7 @@ class MongoManager:
             )
 
         if await collection.find_one({"_id": _id}, {"_id": 1}):
-            val = {"$set": {path: value}} if path else value
+            val = {"$set": {path: value} if path else value}
             await collection.update_one({"_id": _id}, val)
         else:
             val = create_nested_dict(path, value) if path else value
