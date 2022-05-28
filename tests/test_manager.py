@@ -9,19 +9,6 @@ from mongo_manager import MongoManager
 db = MongoManager(os.getenv("MONGO_URI"), database="MongoManagerTest")  # type: ignore
 
 
-@pytest.fixture
-def event_loop():
-    loop = asyncio.get_event_loop()
-
-    yield loop
-
-    pending = asyncio.tasks.all_tasks(loop)
-    loop.run_until_complete(asyncio.gather(*pending))
-    loop.run_until_complete(asyncio.sleep(1))
-
-    loop.close()
-
-
 @pytest.mark.asyncio
 async def test_setup():
     await db._db.test.drop()  # Nuking the collection so the old tests don't break this.
