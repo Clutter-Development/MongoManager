@@ -5,7 +5,6 @@ __all__ = ("create_nested_dict", "find_in_nested_dict", "maybe_int", "NestedDict
 T = TypeVar("T")
 T2 = TypeVar("T2")
 NestedDict = dict[str, T | "NestedDict[T]"]
-# TODO: maybe sometime in the future when i understand typing.Generic, something like NestedDict[T] => dict[str, T | "NestedDict"]
 
 
 def create_nested_dict(path: str | list[str], value: T, /) -> NestedDict[T] | T:
