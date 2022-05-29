@@ -3,11 +3,12 @@ from typing import Any, TypeVar
 __all__ = ("create_nested_dict", "find_in_nested_dict", "maybe_int", "NestedDict")
 
 T = TypeVar("T")
-NestedDict = dict[str, Any | "NestedDict"]
+T2 = TypeVar("T2")
+NestedDict = dict[str, T | "Nest[T]"]
 # TODO: maybe sometime in the future when i understand typing.Generic, something like NestedDict[T] => dict[str, T | "NestedDict"]
 
 
-def create_nested_dict(path: str | list[str], value: T, /) -> NestedDict | T:
+def create_nested_dict(path: str | list[str], value: T, /) -> NestedDict[T] | T:
     """Assembles a nested dictionary from the path and value. ("abc.def.ghi", 123) => {"abc": {"def": {"ghi": 123}}}
 
     Args:
@@ -35,8 +36,8 @@ def create_nested_dict(path: str | list[str], value: T, /) -> NestedDict | T:
 
 
 def find_in_nested_dict(
-    find_in: NestedDict, path: str | list[str], /, *, default: T = None
-) -> Any | T:
+    find_in: NestedDict[T], path: str | list[str], /, *, default: T2 = None
+) -> T | T2:
     """Finds the value that is in the path.
 
     Args:
