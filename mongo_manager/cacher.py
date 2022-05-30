@@ -15,7 +15,7 @@ class CachedMongoManager(MongoManager):
         super().__init__(connect_url, port, database=database)
 
     def uncache(self, key: str | list[str], /, *, match: bool = True) -> None:
-        """Uncaches all kv pairs with the given path. If match is False, it will uncache all kv pairs that start with the path.
+        """Uncaches the kv pair with the given path. If match is False, it will uncache all kv pairs that start with the path.
 
         Args:
             key (str | list[str]): The key(s) to uncache.

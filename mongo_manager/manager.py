@@ -50,6 +50,14 @@ class MongoManager:
     async def ping(
         self, *, return_is_alive: bool = False
     ) -> int | float | tuple[int | float, bool]:
+        """Pings the database and returns the time it took to respond. If return_is_alive is True, it returns a tuple of the time and whether the database is alive.
+
+        Args:
+            return_is_alive (bool, optional): If True, it returns a tuple of the time and whether the database is alive. Defaults to False.
+
+        Returns:
+            int | float | tuple[int | float, bool]: The time it took to respond. If return_is_alive is True, it returns a tuple of the time and whether the database is alive.
+        """
         ts = time.time()
         response = await self._db.command("ping")
         ts = time.time() - ts
