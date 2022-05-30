@@ -78,9 +78,9 @@ class MongoManager:
         collection, _id, path = self._parse_path(path)
 
         return find_in_nested_dict(
-                await collection.find_one({"_id": _id}, {"_id": 0, path: 1} if path else None),
-                path,
-                default=default,
+            await collection.find_one({"_id": _id}, {"_id": 0, path: 1} if path else None),
+            path,
+            default=default,
         )
 
     async def set(self, path: str, value: Any, /) -> None:
