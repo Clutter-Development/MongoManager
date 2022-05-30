@@ -51,7 +51,7 @@ def find_in_nested_dict(
 
     for key in path:
         try:
-            find_in = find_in[key]
+            find_in = find_in[key]  # type: ignore
         except (KeyError, TypeError):
             return default
 
