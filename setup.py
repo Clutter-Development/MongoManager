@@ -4,7 +4,7 @@ with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="mongo_manager",
+    name="MongoManager",
     author="Clutter Development",
     version="1.0.1",
     license="MIT",
