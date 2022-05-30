@@ -77,14 +77,11 @@ class MongoManager:
         """
         collection, _id, path = self._parse_path(path)
 
-        if path:
-            return find_in_nested_dict(
-                await collection.find_one({"_id": _id}, {"_id": 0, path: 1}) or {},
+        return find_in_nested_dict(
+                await collection.find_one({"_id": _id}, {"_id": 0, path: 1} if path else None),
                 path,
                 default=default,
-            )
-
-        return await collection.find_one({"_id": _id}) or default
+        )
 
     async def set(self, path: str, value: Any, /) -> None:
         """Sets the variable in the database.
