@@ -39,7 +39,7 @@ def find_in_nested_dict(
     """Finds the value that is in the path.
 
     Args:
-        find_in (NestedDict): The dictionary to get the value from.
+        find_in (NestedDict | None): The dictionary to get the value from.
         path (str | list[str]): The path to the value.
         default (Any, optional): The default value to return if the key is not found. Defaults to None.
 
