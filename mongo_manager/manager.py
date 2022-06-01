@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import time
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, overload, Literal
 
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -47,9 +47,17 @@ class MongoManager:
 
         return collection, _id, next(iter(path), "")
 
+    @overload
+    async def ping(self, *, return_is_alive: Literal[False] = False) -> float:
+        ...
+
+    @overload
+    async def ping(self, *, return_is_alive: Literal[True] = ...) -> tuple[float, bool]:
+        ...
+
     async def ping(
         self, *, return_is_alive: bool = False
-    ) -> int | float | tuple[int | float, bool]:
+    ) -> float | tuple[float, bool]:
         """Pings the database and returns the time it took to respond. If return_is_alive is True, it returns a tuple of the time and whether the database is alive.
 
         Args:
