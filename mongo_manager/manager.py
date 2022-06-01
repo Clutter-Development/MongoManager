@@ -176,7 +176,7 @@ class MongoManager:
         Raises:
             ValueError: If the path is too short.
         """
-        path: list[str] = path.split(".")
+        path: list[str] = path.split(".", 2)
 
         if not path:
             raise ValueError("Path not given. Cannot delete entire database.")
@@ -192,4 +192,4 @@ class MongoManager:
         if not path:
             await collection.delete_one({"_id": _id})
         else:
-            await collection.update_one({"_id": _id}, {"$unset": {path: ""}})
+            await collection.update_one({"_id": _id}, {"$unset": {path[0]: ""}})
