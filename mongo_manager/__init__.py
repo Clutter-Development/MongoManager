@@ -22,7 +22,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-__title__ = "MongoManager"
+__title__ = "mongo_manager"
 __author__ = "Clutter Development"
 __license__ = "MIT"
 __copyright__ = "Copyright (c) 2022-present Clutter Development"
