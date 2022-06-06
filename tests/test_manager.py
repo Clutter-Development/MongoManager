@@ -44,6 +44,8 @@ async def test_setup():
         ),
     ),
 )
-async def test_manager_set(*, path: str, value: Any, query: dict, expected_result: Any):
+async def test_manager_set(
+    *, path: str, value: Any, query: dict, expected_result: Any
+):
     await db.set(path, value)
     assert await db._db.test.find_one(query) == expected_result

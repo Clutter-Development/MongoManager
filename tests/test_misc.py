@@ -11,14 +11,26 @@ T = TypeVar("T")
     ("find_in", "path", "default", "expected_result"),
     (
         ({"abc": {"def": {"ghi": 123}}}, "abc.def.ghi", "unused default", 123),
-        ({"abc": {"def": {"ghi": 123}}}, ["abc", "def", "ghi"], "unused default", 123),
-        ({"abc": {"def": {"ghi": 123}}}, "abc.def.ghii", "used default", "used default"),
+        (
+            {"abc": {"def": {"ghi": 123}}},
+            ["abc", "def", "ghi"],
+            "unused default",
+            123,
+        ),
+        (
+            {"abc": {"def": {"ghi": 123}}},
+            "abc.def.ghii",
+            "used default",
+            "used default",
+        ),
     ),
 )
 def test_find_in_nested_dict(
     *, find_in: dict, path: str | list[str], default: Any, expected_result: Any
 ) -> None:
-    assert find_in_nested_dict(find_in, path, default=default) == expected_result
+    assert (
+        find_in_nested_dict(find_in, path, default=default) == expected_result
+    )
 
 
 @pytest.mark.parametrize(
@@ -30,7 +42,9 @@ def test_find_in_nested_dict(
         ([], 123, 123),
     ),
 )
-def test_create_nested_dict(*, path: str | list[str], value: T, expected_result: dict | T) -> None:
+def test_create_nested_dict(
+    *, path: str | list[str], value: T, expected_result: dict | T
+) -> None:
     assert create_nested_dict(path, value) == expected_result
 
 

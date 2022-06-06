@@ -1,6 +1,11 @@
-from typing import Any, TypeVar, overload, SupportsInt
+from typing import Any, SupportsInt, TypeVar, overload
 
-__all__ = ("create_nested_dict", "find_in_nested_dict", "maybe_int", "NestedDict")
+__all__ = (
+    "create_nested_dict",
+    "find_in_nested_dict",
+    "maybe_int",
+    "NestedDict",
+)
 
 T = TypeVar("T")
 NestedDict = dict[str, Any | "NestedDict"]

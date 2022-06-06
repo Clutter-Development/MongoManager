@@ -9,7 +9,13 @@ __all__ = ("CachedMongoManager",)
 
 class CachedMongoManager(MongoManager):
     def __init__(
-        self, connect_url: str, port: int | None = None, /, *, database: str, max_items: int
+        self,
+        connect_url: str,
+        port: int | None = None,
+        /,
+        *,
+        database: str,
+        max_items: int,
     ) -> None:
         """Initialize the CachedMongoManager class.
 
@@ -55,7 +61,9 @@ class CachedMongoManager(MongoManager):
         await super().set(path, value)
         self.uncache(path)
 
-    async def push(self, path: str, value: Any, /, *, allow_duplicates: bool = True) -> bool:
+    async def push(
+        self, path: str, value: Any, /, *, allow_duplicates: bool = True
+    ) -> bool:
         res = await super().push(path, value, allow_duplicates=allow_duplicates)
         self.uncache(path)
         return res

@@ -14,7 +14,9 @@ __all__ = ("MongoManager",)
 
 
 class MongoManager:
-    def __init__(self, connect_url: str, port: int | None = None, /, *, database: str) -> None:
+    def __init__(
+        self, connect_url: str, port: int | None = None, /, *, database: str
+    ) -> None:
         """Initialize the MongoManager class.
 
         Args:
@@ -40,7 +42,9 @@ class MongoManager:
         path: list[str] = path.split(".", 2)
 
         if len(path) < 2:
-            raise ValueError("Path must be at least 2 elements long: Collection and _id.")
+            raise ValueError(
+                "Path must be at least 2 elements long: Collection and _id."
+            )
 
         collection = self._db[path.pop(0)]
         _id = maybe_int(path.pop(0))
@@ -52,10 +56,14 @@ class MongoManager:
         ...
 
     @overload
-    async def ping(self, *, return_is_alive: Literal[True] = ...) -> tuple[float, bool]:
+    async def ping(
+        self, *, return_is_alive: Literal[True] = ...
+    ) -> tuple[float, bool]:
         ...
 
-    async def ping(self, *, return_is_alive: bool = False) -> float | tuple[float, bool]:
+    async def ping(
+        self, *, return_is_alive: bool = False
+    ) -> float | tuple[float, bool]:
         """Pings the database and returns the time it took to respond. If return_is_alive is True, it returns a tuple of the latency and whether the database is alive.
 
         Args:
@@ -86,7 +94,9 @@ class MongoManager:
         collection, _id, path = self._parse_path(path)
 
         return find_in_nested_dict(
-            await collection.find_one({"_id": _id}, {"_id": 0, path: 1} if path else None),
+            await collection.find_one(
+                {"_id": _id}, {"_id": 0, path: 1} if path else None
+            ),
             path,
             default=default,
         )
@@ -109,12 +119,18 @@ class MongoManager:
             )
 
         if await collection.find_one({"_id": _id}, {"_id": 1}):
-            await collection.update_one({"_id": _id}, {"$set": {path: value} if path else value})
+            await collection.update_one(
+                {"_id": _id}, {"$set": {path: value} if path else value}
+            )
 
         else:
-            await collection.insert_one({"_id": _id, **create_nested_dict(path, value)})
+            await collection.insert_one(
+                {"_id": _id, **create_nested_dict(path, value)}
+            )
 
-    async def push(self, path: str, value: Any, /, *, allow_duplicates: bool = True) -> bool:
+    async def push(
+        self, path: str, value: Any, /, *, allow_duplicates: bool = True
+    ) -> bool:
         """Appends the variable to a list in the database.
 
         Args:
@@ -136,10 +152,14 @@ class MongoManager:
             )
 
         if not (doc := await collection.find_one({"_id": _id}, {"_id": 1})):
-            await collection.insert_one({"_id": _id, **create_nested_dict(path, [value])})
+            await collection.insert_one(
+                {"_id": _id, **create_nested_dict(path, [value])}
+            )
             return True
 
-        if allow_duplicates or value not in find_in_nested_dict(doc, path, default=[]):
+        if allow_duplicates or value not in find_in_nested_dict(
+            doc, path, default=[]
+        ):
             await collection.update_one({"_id": _id}, {"$push": {path: value}})
             return True
 
