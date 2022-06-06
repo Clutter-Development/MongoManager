@@ -16,4 +16,4 @@ jobs:
       - name: Install Bandit
         run: pip install -U pip bandit
       - name: Run Bandit
-        run: bandit --recursive --skip B101,B605,B607 ./
+        run: bandit --recursive ./
