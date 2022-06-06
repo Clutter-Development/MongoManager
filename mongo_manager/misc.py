@@ -1,4 +1,4 @@
-from typing import Any, TypeVar
+from typing import Any, TypeVar, overload, SupportsInt
 
 __all__ = ("create_nested_dict", "find_in_nested_dict", "maybe_int", "NestedDict")
 
@@ -28,6 +28,7 @@ def create_nested_dict(path: str | list[str], value: T, /) -> NestedDict | T:
     for key in path[:-1]:
         assembled[key] = {}
         assembled = assembled[key]
+
     assembled[path[-1]] = value
 
     return reference
@@ -58,7 +59,17 @@ def find_in_nested_dict(
     return find_in
 
 
-def maybe_int(value: T, /) -> int | T:
+@overload
+def maybe_int(value: SupportsInt, /) -> int:
+    ...
+
+
+@overload
+def maybe_int(value: T, /) -> T:
+    ...
+
+
+def maybe_int(value: SupportsInt | T, /) -> int | T:
     """Converts the value to an int if possible.
 
     Args:

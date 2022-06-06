@@ -26,7 +26,7 @@ __title__ = "mongo_manager"
 __author__ = "Clutter Development"
 __license__ = "MIT"
 __copyright__ = "Copyright (c) 2022-present Clutter Development"
-__version__ = "1.0.1"
+__version__ = "1.1.0"
 
 from .cacher import *
 from .manager import *
