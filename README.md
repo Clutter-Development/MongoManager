@@ -1,3 +1,3 @@
-# MongoManager
+# This project has been moved
 
-A simple PyMongo wrapper.
+This project has been moved to the [Clutter `utils` directory](https://github.com/Clutter-Development/Clutter/tree/master/clutter/utils/db).
